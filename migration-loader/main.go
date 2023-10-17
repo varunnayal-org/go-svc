@@ -7,10 +7,12 @@ import (
 
 	_ "ariga.io/atlas-go-sdk/recordriver"
 	"github.com/varunnayal/go-migrations/src/entity"
+	"github.com/varunnayal/go-migrations/src/enum"
 )
 
 func main() {
 	stmts, err := New("postgres").Load(
+		enum.TwinCity,
 		entity.City{},
 	)
 	if err != nil {
