@@ -7,6 +7,12 @@ on:
     types: [jira-comment-added]
 
 jobs:
+  print_job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Print GitHub Context
+      shell: bash
+      run: echo "${{ toJson(github) }}"
   db-migration-approval-flow:
     runs-on: ubuntu-latest
     if: |
