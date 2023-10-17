@@ -1,0 +1,21 @@
+name: DB Migrations
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  db-migration-approval-flow:
+    runs-on: ubuntu-latest
+    if: github.event.issue.pull_request != null && startsWith(github.event.comment.body, '/migrate')
+    name: DB Migration
+    steps:
+      - name: Approval check and migration run flow
+        uses: varunnayal-org/db-migration-action@master
+        with:
+          repo-token: ${{ secrets.MIGRATION_GITHUB_TOKEN }} # custom repo token
+          # debug: ${{ env.DEBUG }} # defaults to false
+          # pr-base-branch: 'main'  # defaults to main
+          migration-db-url: ${{ secrets.MIGRATION_DB_URL }}
+          # migration-dir: './migrations'
+          approval-teams: "dba,data"
