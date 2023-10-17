@@ -7,13 +7,11 @@ import (
 
 	_ "ariga.io/atlas-go-sdk/recordriver"
 	"github.com/varunnayal/go-migrations/src/entity"
-	"github.com/varunnayal/go-migrations/src/enum"
 )
 
 func main() {
 	stmts, err := New("postgres").Load(
-		enum.Cat1,
-		entity.Category{},
+		entity.City{},
 	)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "failed to load gorm schema: %v\n", err)
