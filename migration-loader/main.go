@@ -12,8 +12,8 @@ import (
 
 func main() {
 	stmts, err := New("postgres").Load(
-		enum.Cat1,
-		entity.Category{},
+		enum.TwinCity,
+		entity.City{},
 	)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "failed to load gorm schema: %v\n", err)

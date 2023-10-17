@@ -1,0 +1,18 @@
+{
+  "base_directory": "./migrations",
+  "aws_secret_provider": {
+    "provider": "aws",
+    "path": "arn:aws:secretsmanager:ap-south-1:000000000000:secret:/prod/db-migration-secret-LLgNlA"
+  },
+  "tokens": {
+    "github": "GH_TOKEN",
+    "jira": "JIRA_TOKEN"
+  },
+  "teams": ["admin", "dba"],
+  "databases": [
+    {
+      "directory": ".",
+      "url_path": "SERVICE_DB1"
+    }
+  ]
+}
