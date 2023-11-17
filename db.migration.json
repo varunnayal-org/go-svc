@@ -8,6 +8,7 @@
     "github": "GH_TOKEN"
   },
   "pr_label": "db-migration",
+  "pr_base_branch": "master",
   "teams": ["data", "dba", "go-svc-team"],
   "databases": [
     {
