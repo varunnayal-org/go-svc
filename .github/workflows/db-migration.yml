@@ -2,7 +2,7 @@ name: DB Migrations
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, reopened]
   pull_request_review:
     types: [submitted]
 
@@ -29,5 +29,8 @@ jobs:
         # ## Used "run" command for local testing
         # run: node db-migration-action/index.js
         with:
-          repo-token: ${{ secrets.MIGRATION_GITHUB_TOKEN }} # custom repo token
+          repo_token: ${{ secrets.MIGRATION_GITHUB_TOKEN }} # custom repo token
           debug: ${{ env.DEBUG }} # defaults to false
+          aws_access_key_id: 'dummy'
+          aws_access_key_secret: 'dummy'
+          aws_endpoint_url: ${{ secrets.AWS_ENDPOINT_URL }}
