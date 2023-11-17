@@ -1,4 +1,6 @@
-db-migration-action
+# to run action locally
+database-migration-action
+tmp
 
 # Binaries for programs and plugins
 *.exe

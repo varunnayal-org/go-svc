@@ -1,14 +1,14 @@
 {
   "base_directory": "./migrations",
-  "aws_secret_provider": {
+  "secret_provider": {
     "provider": "aws",
-    "path": "arn:aws:secretsmanager:ap-south-1:000000000000:secret:/prod/db-migration-secret-LLgNlA"
+    "path": "arn:aws:secretsmanager:ap-south-1:000000000000:secret:/prod/db-migration-secret-ymmjMl"
   },
   "tokens": {
-    "github": "GH_TOKEN",
-    "jira": "JIRA_TOKEN"
+    "github": "GH_TOKEN"
   },
-  "teams": ["admin", "dba"],
+  "pr_label": "db-migration",
+  "teams": ["data", "dba", "go-svc-team"],
   "databases": [
     {
       "directory": ".",
