@@ -2,7 +2,7 @@ name: DB Migrations
 
 on:
   pull_request:
-    types: [opened, reopened]
+    types: [opened, reopened, synchronize]
   pull_request_review:
     types: [submitted]
 
