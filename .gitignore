@@ -1,4 +1,5 @@
 # to run action locally
+# do not uncomment and commit.
 database-migration-action
 tmp
 

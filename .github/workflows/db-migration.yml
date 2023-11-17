@@ -23,11 +23,20 @@ jobs:
       - name: Print GitHub Context
         run: echo "${{ toJson(github) }}"
 
+      - name: Print GitHub Env
+        env:
+          MIGRATION_GITHUB_TOKEN: ${{ secrets.MIGRATION_GITHUB_TOKEN }}
+          AWS_ENDPOINT_URL: ${{ secrets.AWS_ENDPOINT_URL }}
+        run: |
+          env
+          echo "\n\n"
+          echo "MIGRATION_GITHUB_TOKEN: $MIGRATION_GITHUB_TOKEN"
+          echo "AWS_ENDPOINT_URL: $AWS_ENDPOINT_URL"
 
       - name: Approval check and migration run flow
         uses: varunnayal-org/database-migration-action@feature-github-only
         # ## Used "run" command for local testing
-        # run: node db-migration-action/index.js
+        # run: node database-migration-action/dist/index.js
         with:
           repo_token: ${{ secrets.MIGRATION_GITHUB_TOKEN }} # custom repo token
           debug: ${{ env.DEBUG }} # defaults to false
