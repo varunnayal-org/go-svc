@@ -9,27 +9,22 @@ on:
 jobs:
   db-migration-approval-flow:
     runs-on: ubuntu-latest
-    # PR is either approved or created
-    if: |
-      (github.event_name == 'pull_request_review' && github.event.review.state == 'approved') ||
-      (github.event_name == 'pull_request')
+    # # PR is either approved or created
+    # if: |
+    #   (github.event_name == 'pull_request_review' && github.event.review.state == 'approved' && !github.event.pull_request.draft) ||
+    #   (github.event_name == 'pull_request' && !github.event.pull_request.draft)
     name: DB Migration
     steps:
-      # # Comment "checkout repo" before committing. Used only for local testing
+      # # Uncomment this checkout if "node database-migration-action/dist/index.js" is used and you've checked out action in root dir
       # - name: checkout repo
-      #   if: ${{ env.ACT }}
       #   uses: actions/checkout@v3
-
-      # - name: Print GitHub Context
-      #   run: echo "${{ toJson(github) }}"
-
       - name: Approval check and migration run flow
-        uses: varunnayal-org/database-migration-action@feature-github-only
+        uses: varunnayal-org/database-migration-action@feature-github.2
         # ## Used "run" command for local testing
         # run: node database-migration-action/dist/index.js
+        env:
+          DB_URL: ${{ vars.DB_URL }} # Change it to secrets later on
         with:
-          repo_token: ${{ secrets.MIGRATION_GITHUB_TOKEN }} # custom repo token
-          debug: ${{ env.DEBUG }} # defaults to false
-          aws_access_key_id: 'dummy'
-          aws_access_key_secret: 'dummy'
-          aws_endpoint_url: ${{ secrets.AWS_ENDPOINT_URL }}
+          repo_token: ${{ secrets.DB_MIGRATION_GITHUB_TOKEN }} # custom repo token
+          db_migration_echo_url: ${{ vars.DB_MIGRATION_ECHO_URL }}
+          debug: ${{ vars.DEBUG }} # defaults to false
