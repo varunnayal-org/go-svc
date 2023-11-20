@@ -1,35 +1,30 @@
 name: DB Migrations
 
 on:
-  issue_comment:       # dispatched when comment is added
-    types: [created]
-  repository_dispatch: # dispatched from JIRA comment
-    types: [jira-comment-added]
+  pull_request:
+    types: [opened, reopened, synchronize]
+  pull_request_review:
+    types: [submitted]
 
 jobs:
   db-migration-approval-flow:
     runs-on: ubuntu-latest
-    if: |
-      (github.event_name == 'issue_comment' && github.event.issue.pull_request && startsWith(github.event.comment.body, '/migrate')) ||
-      (github.event_name == 'repository_dispatch' && github.event.client_payload.actionName == 'jira')
+    # # PR is either approved or created
+    # if: |
+    #   (github.event_name == 'pull_request_review' && github.event.review.state == 'approved' && !github.event.pull_request.draft) ||
+    #   (github.event_name == 'pull_request' && !github.event.pull_request.draft)
     name: DB Migration
     steps:
-      # Comment "checkout repo" before committing. Used only for local testing
-      - name: checkout repo
-        if: ${{ env.ACT }}
-        uses: actions/checkout@v3
-
-      - name: Print GitHub Context
-        run: echo "${{ toJson(github) }}"
-
-
+      # # Uncomment this checkout if "node database-migration-action/dist/index.js" is used and you've checked out action in root dir
+      # - name: checkout repo
+      #   uses: actions/checkout@v3
       - name: Approval check and migration run flow
-        uses: varunnayal-org/db-migration-action@feature-aws-jira-temp
+        uses: varunnayal-org/database-migration-action@feature-github.2
         # ## Used "run" command for local testing
-        # run: node db-migration-action/index.js
+        # run: node database-migration-action/dist/index.js
+        env:
+          DB_URL: ${{ vars.DB_URL }} # Change it to secrets later one
         with:
-          repo-token: ${{ secrets.MIGRATION_GITHUB_TOKEN }} # custom repo token
-          debug: ${{ env.DEBUG }} # defaults to false
-          pr-base-branch: 'master'  # defaults to main
-          # migration-config-file: './db.migration.json'
-          approval-teams: "dba,data"
+          repo_token: ${{ secrets.DB_MIGRATION_GITHUB_TOKEN }} # custom repo token
+          db_migration_echo_url: ${{ vars.DB_MIGRATION_ECHO_URL }}
+          debug: ${{ vars.DEBUG }} # defaults to false
