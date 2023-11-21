@@ -22,7 +22,7 @@ jobs:
       # - name: checkout repo
       #   uses: actions/checkout@v3
       - name: Approval check and migration run flow
-        uses: varunnayal-org/database-migration-action@feature-github.2
+        uses: varunnayal-org/database-migration-action@feature-github.3
         # ## Used "run" command for local testing
         # run: node database-migration-action/dist/index.js
         env:
