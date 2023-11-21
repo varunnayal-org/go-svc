@@ -16,18 +16,16 @@ jobs:
       (github.event_name == 'pull_request' && !github.event.pull_request.draft)
     name: DB Migration
     steps:
-      - name: Echo
-        run: echo "${{ toJson(github) }}"
-      # # # Uncomment this checkout if "node database-migration-action/dist/index.js" is used and you've checked out action in root dir
-      # # - name: checkout repo
-      # #   uses: actions/checkout@v3
-      # - name: Approval check and migration run flow
-      #   uses: varunnayal-org/database-migration-action@feature-github.2
-      #   # ## Used "run" command for local testing
-      #   # run: node database-migration-action/dist/index.js
-      #   env:
-      #     DB_URL: ${{ vars.DB_URL }} # Change it to secrets later one
-      #   with:
-      #     repo_token: ${{ secrets.DB_MIGRATION_GITHUB_TOKEN }} # custom repo token
-      #     db_migration_echo_url: ${{ vars.DB_MIGRATION_ECHO_URL }}
-      #     debug: ${{ vars.DEBUG }} # defaults to false
+      # # Uncomment this checkout if "node database-migration-action/dist/index.js" is used and you've checked out action in root dir
+      # - name: checkout repo
+      #   uses: actions/checkout@v3
+      - name: Approval check and migration run flow
+        uses: varunnayal-org/database-migration-action@feature-github.3
+        # ## Used "run" command for local testing
+        # run: node database-migration-action/dist/index.js
+        env:
+          DB_URL: ${{ vars.DB_URL }} # Change it to secrets later one
+        with:
+          repo_token: ${{ secrets.DB_MIGRATION_GITHUB_TOKEN }} # custom repo token
+          db_migration_echo_url: ${{ vars.DB_MIGRATION_ECHO_URL }}
+          debug: ${{ vars.DEBUG }} # defaults to false
