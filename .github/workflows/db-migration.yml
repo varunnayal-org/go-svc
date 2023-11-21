@@ -24,7 +24,7 @@ jobs:
 
       - name: List Files
         shell: bash
-        run: echo ls -ltrha
+        run: ls -ltrha
       # - name: Approval check and migration run flow
       #   uses: varunnayal-org/database-migration-action@feature-github.3
       #   # ## Used "run" command for local testing
