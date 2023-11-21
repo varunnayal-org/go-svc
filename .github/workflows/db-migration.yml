@@ -11,7 +11,7 @@ on:
 jobs:
   db-migration-approval-flow:
     runs-on: ubuntu-latest
-    # # PR is either approved or created
+    # PR is either approved or created or comment is added
     if: |
       (github.event_name == 'pull_request_review' && github.event.review.state == 'approved' && !github.event.pull_request.draft) ||
       (github.event_name == 'issue_comment' && github.event.issue.pull_request && startsWith(github.event.comment.body, 'db migrate')) ||
@@ -21,8 +21,9 @@ jobs:
       # # Uncomment this checkout if "node database-migration-action/dist/index.js" is used and you've checked out action in root dir
       # - name: checkout repo
       #   uses: actions/checkout@v3
+
       - name: Approval check and migration run flow
-        uses: varunnayal-org/database-migration-action@feature-github.3
+        uses: varunnayal-org/database-migration-action@feature-test
         # ## Used "run" command for local testing
         # run: node database-migration-action/dist/index.js
         env:
