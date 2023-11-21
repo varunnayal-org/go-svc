@@ -10,10 +10,15 @@ import (
 	"github.com/varunnayal/go-migrations/src/enum"
 )
 
+type Friends struct {
+	entity.Friends
+}
+
 func main() {
 	stmts, err := New("postgres").Load(
 		enum.TwinCity,
 		entity.City{},
+		Friends{},
 	)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "failed to load gorm schema: %v\n", err)
