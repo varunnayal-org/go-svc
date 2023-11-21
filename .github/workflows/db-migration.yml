@@ -1,33 +1,52 @@
-name: DB Migrations
+# Generate github metadata file action.yml for generating db migrations
+name: 'DB Migrations'
+description: 'Run DB migrations'
+branding:
+  icon: 'database'
+  color: 'purple'
+inputs:
+  repo_token:
+    description: 'Github token'
+    required: true
+  migration_config_file:
+    description: 'Migration configuration file'
+    default: './db.migration.json'
+  debug:
+    description: 'show debug logs (true|false)'
+    default: 'false'
+  db_migration_echo_url:
+    description: 'Echo github context and payload to URL'
+    default: ''
 
-on:
-  pull_request:
-    types: [opened, reopened, synchronize]
-  pull_request_review:
-    types: [submitted]
-  issue_comment:
-    types: [created]
+runs:
+  using: composite
+  steps:
+    # - name: Print GitHub Context
+    #   shell: bash
+    #   run: echo "${{ toJson(github) }}"
+    # - name: LS
+    #   shell: bash
+    #   run: echo "${{ toJson(github) }}"
 
-jobs:
-  db-migration-approval-flow:
-    runs-on: ubuntu-latest
-    # # PR is either approved or created
-    if: |
-      (github.event_name == 'pull_request_review' && github.event.review.state == 'approved' && !github.event.pull_request.draft) ||
-      (github.event_name == 'issue_comment' && github.event.issue.pull_request && startsWith(github.event.comment.body, 'db migrate')) ||
-      (github.event_name == 'pull_request' && !github.event.pull_request.draft)
-    name: DB Migration
-    steps:
-      # # Uncomment this checkout if "node database-migration-action/dist/index.js" is used and you've checked out action in root dir
-      # - name: checkout repo
-      #   uses: actions/checkout@v3
-      - name: Approval check and migration run flow
-        uses: varunnayal-org/database-migration-action@feature-github.3
-        # ## Used "run" command for local testing
-        # run: node database-migration-action/dist/index.js
-        env:
-          DB_URL: ${{ vars.DB_URL }} # Change it to secrets later one
-        with:
-          repo_token: ${{ secrets.DB_MIGRATION_GITHUB_TOKEN }} # custom repo token
-          db_migration_echo_url: ${{ vars.DB_MIGRATION_ECHO_URL }}
-          debug: ${{ vars.DEBUG }} # defaults to false
+    - name: checkout repo for PR Events
+      if: ${{ !(github.event_name == 'issue_comment' && github.event.issue.pull_request) }}
+      uses: actions/checkout@v3
+
+    - name: checkout repo for PR comment
+      if: github.event_name == 'issue_comment' && github.event.issue.pull_request
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.issue.pull_request.head.ref }}
+
+    - name: List Files
+      shell: bash
+      run: ls -ltrha
+
+    # - name: migration approvals
+    #   shell: bash
+    #   run: node $GITHUB_ACTION_PATH/dist/index.js
+    #   env:
+    #     INPUT_REPO_TOKEN: ${{ inputs.repo_token }}
+    #     INPUT_MIGRATION_CONFIG_FILE: ${{ inputs.migration_config_file }}
+    #     INPUT_DEBUG: ${{ inputs.debug }}
+    #     INPUT_DB_MIGRATION_ECHO_URL: ${{ inputs.db_migration_echo_url}}
