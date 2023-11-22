@@ -1,12 +1,10 @@
 {
-  "base_directory": "./migrations",
-  "pr_label": "db-migration",
-  "pr_base_branch": "master",
-  "teams": ["data", "dba"],
+  "baseDirectory": "./migrations",
+  "approvalTeams": ["dba"],
+  "ownerTeams": ["go-svc-team"],
   "databases": [
     {
       "directory": ".",
-      "migration_table": "migrations",
       "envName": "DB_URL"
     }
   ]
