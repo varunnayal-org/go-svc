@@ -22,8 +22,12 @@ jobs:
         # ## Used "run" command for local testing
         # run: node database-migration-action/dist/index.js
         env:
-          DB_URL: ${{ vars.DB_URL }} # Change it to secrets later one
+          AWS_ACCESS_KEY_ID: ${{ secrets.DB_MIGRATION_AWS_ACCESS_KEY_SECRET }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.DB_MIGRATION_AWS_ACCESS_KEY_ID }}
+          AWS_ENDPOINT_URL: ${{ vars.DB_MIGRATION_AWS_ENDPOINT_URL }}
+          AWS_REGION: ${{ vars.DB_MIGRATION_AWS_REGION }}
         with:
           repo_token: ${{ secrets.DB_MIGRATION_GITHUB_TOKEN }} # custom repo token
-          db_migration_echo_url: ${{ vars.DB_MIGRATION_ECHO_URL }}
+          db_migration_echo_url: ${{ vars.DB_MIGRATION_ECHO_URL }} # TODO Change it to Secret
+          aws_secret_store: ${{ vars.DB_MIGRATION_SECRET_STORE }} # TODO Change it to Secret
           debug: ${{ vars.DEBUG }} # defaults to false
