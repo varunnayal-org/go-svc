@@ -7,6 +7,7 @@ const (
 	TwinCity   CityCategory = "Twin"
 	MegaCity   CityCategory = "Mega"
 	GardenCity CityCategory = "Garden"
+	DumbCity   CityCategory = "Dumb"
 )
 
 // AllCategories returns all possible values for CityCategory
@@ -15,6 +16,7 @@ func (c CityCategory) All() []string {
 		string(TwinCity),
 		string(MegaCity),
 		string(GardenCity),
+		string(DumbCity),
 	}
 }
 
