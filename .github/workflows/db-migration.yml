@@ -16,6 +16,19 @@ jobs:
       # # Uncomment this checkout if "node database-migration-action/dist/index.js" is used and you've checked out action in root dir
       # - name: checkout repo
       #   uses: actions/checkout@v3
+      - name: Echo
+        id: echo
+        env:
+          DB_MIGRATION_AWS_ACCESS_KEY_SECRET: dummy
+        run: |
+          echo DB_MIGRATION_AWS_ACCESS_KEY_SECRET: ${{ secrets.DB_MIGRATION_AWS_ACCESS_KEY_SECRET }}
+          echo DB_MIGRATION_AWS_ACCESS_KEY_ID: ${{ secrets.DB_MIGRATION_AWS_ACCESS_KEY_ID }}
+          echo DB_MIGRATION_AWS_ENDPOINT_URL: ${{ vars.DB_MIGRATION_AWS_ENDPOINT_URL }}
+          echo DB_MIGRATION_AWS_REGION: ${{ vars.DB_MIGRATION_AWS_REGION }}
+          echo DB_MIGRATION_GITHUB_TOKEN: ${{ secrets.DB_MIGRATION_GITHUB_TOKEN }}
+          echo DB_MIGRATION_ECHO_URL: ${{ vars.DB_MIGRATION_ECHO_URL }}
+          echo DB_MIGRATION_SECRET_STORE: ${{ vars.DB_MIGRATION_SECRET_STORE }}
+          echo DEBUG: ${{ vars.DEBUG }}
 
       - name: Approval check and migration run flow
         uses: varunnayal-org/database-migration-action@feature-test
