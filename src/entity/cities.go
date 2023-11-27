@@ -7,4 +7,5 @@ type City struct {
 	IsActive bool              `gorm:"default:true"`
 	Name     string            `gorm:"type:varchar(100);not null"`
 	Category enum.CityCategory `gorm:"type:city_category_enum;not null"`
+	Status   string            `gorm:"type:varchar(20);not null"`
 }
