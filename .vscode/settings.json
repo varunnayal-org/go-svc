@@ -1,5 +1,0 @@
-{
-  "files.exclude": {
-    "database-migration-action": true
-  }
-}
