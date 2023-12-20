@@ -6,7 +6,8 @@
   "databases": [
     {
       "directory": ".",
-      "envName": "DB_URL"
+      "envName": "DB_URL",
+      "baseline": "00000000000000"
     }
   ]
 }
