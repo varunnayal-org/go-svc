@@ -5,9 +5,14 @@
   "ownerTeams": ["go-svc-team"],
   "databases": [
     {
-      "directory": ".",
+      "directory": "mg1",
       "envName": "DB_URL",
       "baseline": "00000000000000"
+    },
+
+    {
+      "directory": "mg2",
+      "envName": "DB_URL2"
     }
   ]
 }
