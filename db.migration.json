@@ -1,11 +1,13 @@
 {
+  "serviceName": "go-svc",
   "baseDirectory": "./migrations",
   "approvalTeams": ["dba"],
   "ownerTeams": ["go-svc-team"],
   "databases": [
     {
       "directory": ".",
-      "envName": "DB_URL"
+      "envName": "DB_URL",
+      "baseline": "00000000000000"
     }
   ]
 }

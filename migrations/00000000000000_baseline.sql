@@ -1,0 +1,3 @@
+CREATE EXTENSION pg_repack;
+
+DROP EXTENSION pg_repack;
