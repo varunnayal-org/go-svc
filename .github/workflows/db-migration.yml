@@ -32,10 +32,10 @@ jobs:
     steps:
       # # Uncomment this checkout if "node database-migration-action/dist/index.js" is used and you've checked out action in root dir
       # - name: checkout repo
-      #   uses: actions/checkout@v3
+      #   uses: actions/checkout@v4
 
       - name: Approval check and migration run flow
-        uses: varunnayal-org/database-migration-action@feature-test
+        uses: varunnayal-org/database-migration-action@feature-jira
         # ## Used "run" command for local testing
         # run: node database-migration-action/dist/index.js
         env:
