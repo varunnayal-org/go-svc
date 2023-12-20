@@ -19,18 +19,19 @@ jobs:
         env:
           POSTGRES_DB: test
           POSTGRES_PASSWORD: postgres
+          POSTGRES_EXTENSIONS: "pg_repack,uuid-ossp"
         ports:
           - 5432:5432
         options: >-
           --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          --health-interval 2s
+          --health-timeout 1s
+          --health-retries 25
 
       # image: {aws_account_id}.dkr.ecr.{region}.amazonaws.com/postgres:15.5-alpine
 
     steps:
-      # # Uncomment this checkout if "node database-migration-action/dist/index.js" is used and you've checked out action in root dir
+      # # Uncomment this checkout if "node database-migration-action/dist/index.js" is used and you've checked out action in root directory
       # - name: checkout repo
       #   uses: actions/checkout@v4
 
