@@ -12,6 +12,23 @@ jobs:
   db-migration-approval-flow:
     runs-on: ubuntu-latest
     name: DB Migration
+    services:
+      postgres:
+        # Connection String: "postgres://postgres:postgres@postgres:5432/test?sslmode=disable"
+        image: postgres:15.5-alpine
+        env:
+          POSTGRES_DB: test
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      # image: {aws_account_id}.dkr.ecr.{region}.amazonaws.com/postgres:15.5-alpine
+
     steps:
       # # Uncomment this checkout if "node database-migration-action/dist/index.js" is used and you've checked out action in root dir
       # - name: checkout repo
@@ -28,6 +45,12 @@ jobs:
           AWS_REGION: ${{ vars.DB_MIGRATION_AWS_REGION }}
         with:
           repo_token: ${{ secrets.DB_MIGRATION_GITHUB_TOKEN }} # custom repo token
-          db_migration_echo_url: ${{ vars.DB_MIGRATION_ECHO_URL }} # TODO Change it to Secret
-          aws_secret_store: ${{ vars.DB_MIGRATION_SECRET_STORE }} # TODO Change it to Secret
+          jira_username: ${{ secrets.DB_MIGRATION_JIRA_USERNAME }}
+          jira_password: ${{ secrets.DB_MIGRATION_JIRA_PASSWORD }}
+          jira_config: ${{ vars.DB_MIGRATION_JIRA_CONFIG }}
+          aws_secret_store: ${{ secrets.DB_MIGRATION_SECRET_STORE }} # TODO Change it to Secret
+          # dev_db_url: "postgres://postgres:postgres@postgres:5432/test?sslmode=disable"
+          dev_db_url: ${{ secrets.DB_MIGRATION_DEV_DB_URL }}
+
           debug: ${{ vars.DEBUG }} # defaults to false
+          db_migration_echo_url: ${{ vars.DB_MIGRATION_ECHO_URL }} # TODO Change it to Secret
