@@ -1,4 +1,5 @@
 {
+  "serviceName": "go-svc",
   "baseDirectory": "./migrations",
   "approvalTeams": ["dba"],
   "ownerTeams": ["go-svc-team"],
