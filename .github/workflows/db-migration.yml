@@ -19,6 +19,7 @@ jobs:
     services:
       postgres:
         # Connection String: "postgres://postgres:postgres@postgres:5432/test?sslmode=disable"
+        # postgres://postgres:postgres@localhost:5432/test?sslmode=disable
         image: postgres:15.5-alpine
         env:
           POSTGRES_DB: test
@@ -55,7 +56,7 @@ jobs:
           jira_config: ${{ vars.DB_MIGRATION_JIRA_CONFIG }}
           aws_secret_store: ${{ secrets.DB_MIGRATION_SECRET_STORE }} # TODO Change it to Secret
           # dev_db_url: "postgres://postgres:postgres@postgres:5432/test?sslmode=disable"
-          dev_db_url: ${{ secrets.DB_MIGRATION_DEV_DB_URL }}
+          dev_db_url: "postgres://postgres:postgres@localhost:5432/test?sslmode=disable"
 
           debug: ${{ vars.DEBUG }} # defaults to false
           db_migration_echo_url: ${{ vars.DB_MIGRATION_ECHO_URL }} # TODO Change it to Secret

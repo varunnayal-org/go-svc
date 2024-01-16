@@ -8,7 +8,7 @@ CREATE TABLE
     name int not null,
     value text,
     config_type varchar(100),
-    `type` varchar(100),
+    type varchar(100),
     is_active boolean not null default true,
     created_at timestamptz not null default now ()
   );
