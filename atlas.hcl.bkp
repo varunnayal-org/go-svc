@@ -19,3 +19,15 @@ env "gorm" {
     }
   }
 }
+
+lint {
+  destructive { // prefix: DS
+    error = true
+  }
+  incompatible { // prefix: BC
+    error = true
+  }
+  concurrent_index { // prefix: PG
+    error = true
+  }
+}

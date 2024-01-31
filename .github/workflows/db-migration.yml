@@ -7,15 +7,19 @@ on:
     types: [submitted]
   issue_comment:
     types: [created]
+  schedule:
+    - cron: "10 * * * *"
 
 jobs:
   db-migration-approval-flow:
     runs-on: ubuntu-latest
     name: DB Migration
     if: |
-      (github.event_name == 'pull_request' && !github.event.pull_request.draft) ||
+      (github.event_name == 'schedule') ||
+      (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'db-migration') && !github.event.pull_request.draft) ||
       (github.event_name == 'pull_request_review' && github.event.review.state == 'approved') ||
       (github.event_name == 'issue_comment' && startsWith(github.event.comment.body, 'db migrate'))
+
     services:
       postgres:
         # Connection String: "postgres://postgres:postgres@postgres:5432/test?sslmode=disable"
@@ -26,7 +30,7 @@ jobs:
           POSTGRES_PASSWORD: postgres
           POSTGRES_EXTENSIONS: "pg_repack,uuid-ossp"
         ports:
-          - 5432:5432
+          - 5555:5432
         options: >-
           --health-cmd pg_isready
           --health-interval 2s
@@ -56,7 +60,7 @@ jobs:
           jira_config: ${{ vars.DB_MIGRATION_JIRA_CONFIG }}
           aws_secret_store: ${{ secrets.DB_MIGRATION_SECRET_STORE }} # TODO Change it to Secret
           # dev_db_url: "postgres://postgres:postgres@postgres:5432/test?sslmode=disable"
-          dev_db_url: "postgres://postgres:postgres@localhost:5432/test?sslmode=disable"
+          dev_db_url: "postgres://postgres:postgres@localhost:5555/test?sslmode=disable"
 
           debug: ${{ vars.DEBUG }} # defaults to false
           db_migration_echo_url: ${{ vars.DB_MIGRATION_ECHO_URL }} # TODO Change it to Secret
