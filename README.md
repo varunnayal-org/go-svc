@@ -60,3 +60,4 @@ type IEnum interface {
   All() []string
 }
 ```
+
