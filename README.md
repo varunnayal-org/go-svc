@@ -50,7 +50,7 @@ Follow step 2 to 4 from above.
 
 ### Enum
 
-Enums should implement following interface
+Enums should implement following interface:
 
 ```go
 type IEnum interface {
