@@ -17,8 +17,8 @@ jobs:
     if: |
       (github.event_name == 'schedule') ||
       (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'db-migration') && !github.event.pull_request.draft) ||
-      (github.event_name == 'pull_request_review' && github.event.review.state == 'approved') ||
-      (github.event_name == 'issue_comment' && startsWith(github.event.comment.body, 'db migrate'))
+      (github.event_name == 'pull_request_review' && contains(github.event.pull_request.labels.*.name, 'db-migration') && github.event.review.state == 'approved') ||
+      (github.event_name == 'issue_comment' && contains(github.event.issue.labels.*.name, 'db-migration') && startsWith(github.event.comment.body, 'db migrate'))
 
     services:
       postgres:
@@ -60,7 +60,7 @@ jobs:
           jira_config: ${{ vars.DB_MIGRATION_JIRA_CONFIG }}
           aws_secret_store: ${{ secrets.DB_MIGRATION_SECRET_STORE }} # TODO Change it to Secret
           # dev_db_url: "postgres://postgres:postgres@postgres:5432/test?sslmode=disable"
-          dev_db_url: "postgres://postgres:postgres@localhost:5555/test?sslmode=disable"
+          dev_db_url: "postgres://postgres:postgres@localhost:5555/test?sslmode=disable&search_path=public"
 
           debug: ${{ vars.DEBUG }} # defaults to false
           db_migration_echo_url: ${{ vars.DB_MIGRATION_ECHO_URL }} # TODO Change it to Secret
